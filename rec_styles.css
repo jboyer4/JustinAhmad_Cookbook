@@ -1,0 +1,80 @@
+/*This section styles the the menu bar that will be the
+same on all pages*/
+
+nav{
+	float: left;
+}
+
+/*The nav list contains the navigational links to the rest
+of the pages*/
+nav ul{
+	list-style: none;
+	margin: auto;
+	padding: 10px;
+}
+
+nav li {
+	display: inline-block;
+	margin-left: 30px;
+	padding-top: 15px;
+}
+
+nav a {
+	color: white;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 20px;
+}
+
+.colorBar{
+  height: 70px;
+  width: 100%;
+  background-color: Black;
+}
+
+/*This section formats the main page*/
+.searchBar{
+	margin-left: 30%;
+	margin-top: 20%;
+	font-size: 30px;
+}
+.searchBar input{
+	height: 40px;
+	width: 300px;
+	border-right:none;
+	padding: 0px;
+}
+.searchBar button{
+	height: 40px;
+	width: 100px;
+	border-left:none;
+	padding: 0px;
+}
+
+.searchMenu{
+	margin: 25%;
+	background-color: rgba(255, 255, 255, 0.5);
+	
+}
+.searchMenu input{
+	width: 100%;
+}
+
+.recipe{
+	margin: 25%;
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+body {
+  background-image: url(Spice.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+div p {
+	width: 80%;
+	margin: auto;
+}
+
+
