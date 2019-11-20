@@ -52,8 +52,8 @@ nav a {
 }
 
 .searchMenu{
-	margin: 25%;
-	background-color: rgba(255, 255, 255, 0.5);
+	margin: 7%;
+	background-color: rgba(255, 255, 255, 0.7);
 	
 }
 .searchMenu input{
@@ -61,8 +61,9 @@ nav a {
 }
 
 .recipe{
-	margin: 25%;
-	background-color: rgba(255, 255, 255, 0.5);
+	margin: 7%;
+	background-color: rgba(255, 255, 255, 0.7);
+	
 }
 
 body {
@@ -72,9 +73,25 @@ body {
   background-attachment: fixed;
 }
 
+label{
+	font-size: large;
+}
+legend{
+	font-size: larger;
+}
+header{
+	font-size: x-large;
+}
 div p {
 	width: 80%;
 	margin: auto;
+
+
+}
+
+label{
+	font-size:5;
+	font=color: red;
 }
 
 
