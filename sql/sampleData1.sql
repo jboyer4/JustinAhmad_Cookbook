@@ -1,0 +1,4 @@
+INSERT INTO `recipe`(`name`, `serving_size`,`cook_time`, `instructions`) VALUES ("Pumpkin Pie", 6, 55,  Preheat oven to 425 degrees F. Whisk pumpkin, sweetened condensed milk, eggs, spices and salt in medium bowl until smooth. Pour into crust. Bake 15 minutes.
+Reduce oven temperature to 350 degrees F and continue baking 35 to 40 minutes or until knife inserted 1 inch from crust comes out clean. Cool. Garnish as desired. Store leftovers covered in refrigerator.);
+
+INSERT INTO `recipe`(`name`, `serving_size`,`cook_time`, `instructions`) VALUES ("Deluxe Corned beef hash", 8, 70,  Melt butter with the olive oil in a large skillet over medium heat, and cook the onion just until it begins to brown, about 8 minutes; stir in the potatoes and carrot, and cook until tender, about 15 minutes, stirring occasionally. Stir in the cubed corned beef, parsley, thyme, salt, and pepper. Let the mixture cook until hash is crisp and browned, stirring often, 10 to 15 more minutes.);
