@@ -1,0 +1,64 @@
+<div class="source_input">
+	<form action="/insert-ingredient" method="get"> 
+        Recipe Id: <input type="number" name="recipe_id"><br>
+		Name:<input type="text" name="name"><br>
+		Amount:<input type="number" name="amount"><br>
+		Units:<input type="text" name="units"><br>
+		<input type="submit">
+	</form>
+</div>
+
+
+<div >
+	<table id="Ingredients">
+		<tr>
+			<th>Recipe_id</th>
+			<th>Name</th>
+			<th>Amount</th>
+            <th>Unit</th>
+		</tr>
+	</table>
+</div>
+
+<script>
+	
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', '/select-ingredients', false);
+	xhr.send();
+	console.log(xhr.response);
+
+	let sources = JSON.parse(xhr.response)
+	console.log(sources);
+
+	let section = document.getElementById('Ingredients');
+
+	for (let i = 0; i < sources.length; i++) {
+		let row = document.createElement('tr');
+		
+		// add source of source to table
+		let recipe_id = document.createElement('td');
+		recipe_id.textContent = sources[i].recipe_id;
+		row.appendChild(recipe_id);
+        
+        let name = document.createElement('td');
+		name.textContent = sources[i].name;
+		row.appendChild(name);
+		
+		// add source of source to table
+		let amount = document.createElement('td');
+		amount.textContent = sources[i].amount;
+		row.appendChild(amount);
+
+		// add source of recipe to table
+		let unit = document.createElement('td');
+		unit.textContent = sources[i].unit;
+		row.appendChild(unit);
+
+
+
+		section.appendChild(row);
+	}
+
+
+
+</script>

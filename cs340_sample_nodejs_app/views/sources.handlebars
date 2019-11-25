@@ -1,0 +1,58 @@
+<div class="source_input">
+	<form action="/insert-source" method="get"> 
+		Name:<input type="text" name="name"><br>
+		Author:<input type="text" name="author"><br>
+		Year Published:<input type="number" name="year_published"><br>
+		<input type="submit">
+	</form>
+</div>
+
+
+<div >
+	<table id="Sources">
+		<tr>
+			<th>Name</th>
+			<th>Author</th>
+			<th>Year Published</th>
+		</tr>
+	</table>
+</div>
+
+<script>
+	
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', '/select-sources', false);
+	xhr.send();
+	console.log(xhr.response);
+
+	let sources = JSON.parse(xhr.response)
+	console.log(sources);
+
+	let sourceSection = document.getElementById('Sources');
+
+	for (let i = 0; i < sources.length; i++) {
+		let source_row = document.createElement('tr');
+		
+		// add source of source to table
+		let name = document.createElement('td');
+		name.textContent = sources[i].name;
+		source_row.appendChild(name);
+		
+		// add source of source to table
+		let author = document.createElement('td');
+		author.textContent = sources[i].author;
+		source_row.appendChild(author);
+
+		// add source of recipe to table
+		let year_published = document.createElement('td');
+		year_published.textContent = sources[i].year_published;
+		source_row.appendChild(year_published);
+
+
+
+		sourceSection.appendChild(source_row);
+	}
+
+
+
+</script>

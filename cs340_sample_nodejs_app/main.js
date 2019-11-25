@@ -29,6 +29,15 @@ app.get('/', function (req, res, next){
   res.render('recipe_main');
 });
 
+app.get('/sources', function (req, res, next){
+  res.render('sources');
+});
+
+app.get('/ingredients', function (req, res, next){
+  res.render('ingredients');
+});
+
+
 // get recipes
 app.get('/select-recipes', function (req,res,next) {
   mysql.pool.query("SELECT * FROM Recipe", function(err, result){
@@ -80,14 +89,44 @@ app.get('/select-ingredients', function (req,res,next) {
 
 // post insert
 app.get('/insert-recipe', function(req, res){
-  console.log(req.body)
-  mysql.pool.query("INSERT INTO recipe (name, serving_size, cook_time, instructions) VALUES (?,?,?,?)", req.body.name, req.body.serving_size, req.body.cook_time, req.body.instructions, function(err, result){
+  console.log(req.query)
+  mysql.pool.query("INSERT INTO Recipe (name, serving_size, cook_time, instructions) VALUES (?,?,?,?)", [req.query.name, req.query.serving_size, req.query.cook_time, req.query.instructions], function(err, result){
     if(err){
+      res.send(err)
       next(err);
+      console.log(err);
       return;
     }
     console.log(result);
     res.render('recipe_main');
+  })
+});
+
+app.get('/insert-source', function(req, res){
+  console.log(req.query)
+  mysql.pool.query("INSERT INTO Source (name, author, year_published) VALUES (?,?,?)", [req.query.name, req.query.author, req.query.year_published], function(err, result){
+    if(err){
+      res.send(err)
+      next(err);
+      console.log(err);
+      return;
+    }
+    console.log(result);
+    res.render('sources');
+  })
+});
+
+app.get('/insert-ingredient', function(req, res){
+  console.log(req.query)
+  mysql.pool.query("INSERT INTO Ingredient (recipe_id, name, amount, unit) VALUES ((select id from Recipe where id = ?),?,?, ?)", [parseInt(req.query.recipe_id), req.query.name, req.query.amount, req.query.units], function(err, result){
+    if(err){
+      res.send(err)
+      next(err);
+      console.log(err);
+      return;
+    }
+    console.log(result);
+    res.render('ingredients');
   })
 });
 
