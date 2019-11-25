@@ -24,7 +24,7 @@ CREATE TABLE `Ingredient` (
  `recipe_id` int NOT NULL,
  `name` varchar(25) NOT NULL,
  `amount` int,
- `unit` varchar(25)
+ `unit` varchar(25),
  PRIMARY KEY (`id`),
  FOREIGN KEY (`recipe_id`) REFERENCES Recipe(`id`)
 );

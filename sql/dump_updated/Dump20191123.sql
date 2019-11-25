@@ -125,7 +125,7 @@ CREATE TABLE `Source` (
 
 LOCK TABLES `Source` WRITE;
 /*!40000 ALTER TABLE `Source` DISABLE KEYS */;
-INSERT INTO `Source` VALUES (1,'Cookbook Extravaganza',2002,'Rachel Ray'),(2,'Ahmad\'s Great Dishes',2019,'Ahmad El-Bobou');
+INSERT INTO `Source` VALUES (1,'Cookbook Extravaganza',2002,'Rachel Ray'),(2,'Ahmads Great Dishes',2019,'Ahmad El-Bobou');
 /*!40000 ALTER TABLE `Source` ENABLE KEYS */;
 UNLOCK TABLES;
 
