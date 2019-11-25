@@ -9,6 +9,17 @@
 	</form>
 </div>
 
+<div class="recipe_input">
+	<form action="/insert-recipe" method="post"> 
+		Name:<input type="text" name="name"><br>
+		Serving Size:<input type="number" name="serving_size"><br>
+		Cook Time:<input type="number" name="cook_time"><br>
+		Instructions:<input type="text" name="instructions"><br>
+		<input type="submit">
+	</form>
+</div>
+
+
 <div >
 	<table id="recipes">
 		<tr>
@@ -16,6 +27,7 @@
 			<th>Serving Size</th>
 			<th>Cook Time</th>
 			<th>Instructions</th>
+			<th>Source ID</th>
 		</tr>
 	</table>
 </div>
@@ -35,22 +47,31 @@
 	for (let i = 0; i < recipes.length; i++) {
 		let recipe_row = document.createElement('tr');
 		
+		// add source of recipe to table
 		let name = document.createElement('td');
 		name.textContent = recipes[i].name;
 		recipe_row.appendChild(name);
 		
-
+		// add source of recipe to table
 		let serving_size = document.createElement('td');
 		serving_size.textContent = recipes[i].serving_size;
 		recipe_row.appendChild(serving_size);
 
+		// add source of recipe to table
 		let cook_time = document.createElement('td');
 		cook_time.textContent = recipes[i].cook_time;
 		recipe_row.appendChild(cook_time);
 
+		// add source of recipe to table
 		let instructions = document.createElement('td');
 		instructions.textContent = recipes[i].instructions;
 		recipe_row.appendChild(instructions);
+
+		// add source of recipe to table
+		let source = document.createElement('td');
+		source.textContent = recipes[i].source_id;
+		recipe_row.appendChild(source);
+
 
 		recipeSection.appendChild(recipe_row);
 	}
