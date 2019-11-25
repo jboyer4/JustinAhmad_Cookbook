@@ -28,6 +28,19 @@ app.get('/', function (req, res, next){
   res.render('recipe_main');
 });
 
+app.get('/select-recipes', function (req,res,next) {
+  mysql.pool.query("SELECT * FROM Recipe", function(err, result){
+    if(err){
+      next(err);
+      return;
+    }
+    console.log(result);
+    res.send(JSON.stringify(result));
+  })
+});
+
+
+
 app.use(function(req,res){
   res.status(404);
   res.render('404');

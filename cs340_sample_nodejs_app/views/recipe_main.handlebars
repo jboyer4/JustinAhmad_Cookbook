@@ -9,3 +9,53 @@
 	</form>
 </div>
 
+<div >
+	<table id="recipes">
+		<tr>
+			<th>Name</th>
+			<th>Serving Size</th>
+			<th>Cook Time</th>
+			<th>Instructions</th>
+		</tr>
+	</table>
+</div>
+
+<script>
+	
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', '/select-recipes', false);
+	xhr.send();
+	console.log(xhr.response);
+
+	let recipes = JSON.parse(xhr.response)
+	console.log(recipes);
+
+	let recipeSection = document.getElementById('recipes');
+
+	for (let i = 0; i < recipes.length; i++) {
+		let recipe_row = document.createElement('tr');
+		
+		let name = document.createElement('td');
+		name.textContent = recipes[i].name;
+		recipe_row.appendChild(name);
+		
+
+		let serving_size = document.createElement('td');
+		serving_size.textContent = recipes[i].serving_size;
+		recipe_row.appendChild(serving_size);
+
+		let cook_time = document.createElement('td');
+		cook_time.textContent = recipes[i].cook_time;
+		recipe_row.appendChild(cook_time);
+
+		let instructions = document.createElement('td');
+		instructions.textContent = recipes[i].instructions;
+		recipe_row.appendChild(instructions);
+
+		recipeSection.appendChild(recipe_row);
+	}
+
+
+
+</script>
+
