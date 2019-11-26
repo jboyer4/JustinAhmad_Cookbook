@@ -1,0 +1,53 @@
+<div class="searchMenu">
+	<form>
+		<fieldset>
+			<legend>Advanced Search</legend>
+			
+			<label>Name:
+				<input type="text" name="name">
+			</label>
+			<br />
+			
+			<label>Tag or Type:
+				<input type="text" name="tag">
+			</label>
+			<br />
+			
+			<label>Cook Time in Min:
+				<select name = "moreOrLess"> 
+      				<option value = "more">&gt;</option>
+      				<option value = "less">&lt;</option>
+      				<option value = "equals">exactly</option> 
+ 				</select>
+				<input type="text" name="time">
+			</label>
+			<br />
+
+			<label>Indredient:
+				<input type="text" name="ingredient">
+			</label>
+			<br />
+
+			<label>Source:
+				<input type="text" name="source">
+			</label>
+			<br />
+
+			<button type="submit"><i>Submit</i></button>
+		</fieldset>
+	</form>
+</div>
+
+<div class="searchMenu">
+<table>
+	{{#each Recipies}}
+	<tr>
+		<th>Recipe</th>
+	</tr>
+	{{#each Recipies}}
+	<tr>
+		<td>{{name}}</td>
+	</tr>
+	{{/each}}
+</table>
+</div>
