@@ -14,15 +14,12 @@ var handlebars = require('express-handlebars').create({
 
 app.engine('handlebars', handlebars.engine);
 app.use(bodyParser.urlencoded({extended:true}));
-//app.use('/static', express.static('public'));
+app.use(express.static('public'));
 app.set('view engine', 'handlebars');
 app.set('port', 33123);
 app.set('mysql', mysql);
 
-// app.use('/people_certs', require('./people_certs.js'));
-// app.use('/people', require('./people.js'));
-// app.use('/planets', require('./planets.js'));
-// app.use('/', express.static('public'));
+
 
 // home page that displays recipes
 app.get('/', function (req, res, next){
@@ -40,7 +37,7 @@ app.get('/ingredients', function (req, res, next){
 
 // get recipes
 app.get('/select-recipes', function (req,res,next) {
-  mysql.pool.query("SELECT * FROM Recipe", function(err, result){
+  mysql.pool.query("SELECT * FROM Recipes", function(err, result){
     if(err){
       next(err);
       return;
@@ -52,7 +49,7 @@ app.get('/select-recipes', function (req,res,next) {
 
 // get sources
 app.get('/select-sources', function (req,res,next) {
-  mysql.pool.query("SELECT * FROM Source", function(err, result){
+  mysql.pool.query("SELECT * FROM Sources", function(err, result){
     if(err){
       next(err);
       return;
@@ -64,7 +61,7 @@ app.get('/select-sources', function (req,res,next) {
 
 // get tags
 app.get('/select-tags', function (req,res,next) {
-  mysql.pool.query("SELECT * FROM Tag", function(err, result){
+  mysql.pool.query("SELECT * FROM Tags", function(err, result){
     if(err){
       next(err);
       return;
@@ -76,7 +73,7 @@ app.get('/select-tags', function (req,res,next) {
 
 // get ingredients
 app.get('/select-ingredients', function (req,res,next) {
-  mysql.pool.query("SELECT * FROM Ingredient", function(err, result){
+  mysql.pool.query("SELECT * FROM Ingredients", function(err, result){
     if(err){
       next(err);
       return;
@@ -90,7 +87,7 @@ app.get('/select-ingredients', function (req,res,next) {
 // post insert
 app.get('/insert-recipe', function(req, res){
   console.log(req.query)
-  mysql.pool.query("INSERT INTO Recipe (name, serving_size, cook_time, instructions) VALUES (?,?,?,?)", [req.query.name, req.query.serving_size, req.query.cook_time, req.query.instructions], function(err, result){
+  mysql.pool.query("INSERT INTO Recipes (name, serving_size, cook_time, instructions) VALUES (?,?,?,?)", [req.query.name, req.query.serving_size, req.query.cook_time, req.query.instructions], function(err, result){
     if(err){
       res.send(err)
       next(err);
@@ -104,7 +101,7 @@ app.get('/insert-recipe', function(req, res){
 
 app.get('/insert-source', function(req, res){
   console.log(req.query)
-  mysql.pool.query("INSERT INTO Source (name, author, year_published) VALUES (?,?,?)", [req.query.name, req.query.author, req.query.year_published], function(err, result){
+  mysql.pool.query("INSERT INTO Sources (name, author, year_published) VALUES (?,?,?)", [req.query.name, req.query.author, req.query.year_published], function(err, result){
     if(err){
       res.send(err)
       next(err);
@@ -118,7 +115,7 @@ app.get('/insert-source', function(req, res){
 
 app.get('/insert-ingredient', function(req, res){
   console.log(req.query)
-  mysql.pool.query("INSERT INTO Ingredient (recipe_id, name, amount, unit) VALUES ((select id from Recipe where id = ?),?,?, ?)", [parseInt(req.query.recipe_id), req.query.name, req.query.amount, req.query.units], function(err, result){
+  mysql.pool.query("INSERT INTO Ingredients (recipe_id, name, amount, unit) VALUES ((select id from Recipe where id = ?),?,?, ?)", [parseInt(req.query.recipe_id), req.query.name, req.query.amount, req.query.units], function(err, result){
     if(err){
       res.send(err)
       next(err);
