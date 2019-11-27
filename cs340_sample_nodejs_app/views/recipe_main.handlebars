@@ -73,6 +73,7 @@
 		source.textContent = recipes[i].source_id;
 		recipe_row.appendChild(source);
 
+		// this button sends a request to delete the element and it then hides the html
 		let button = document.createElement('button');
 		button.textContent = "Delete"
 		button.onclick = () => {

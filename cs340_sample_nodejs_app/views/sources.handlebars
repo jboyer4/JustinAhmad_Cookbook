@@ -32,7 +32,8 @@
 
 	for (let i = 0; i < sources.length; i++) {
 		let source_row = document.createElement('tr');
-		
+		source_row.id = sources[i].id;
+
 		// add source of source to table
 		let name = document.createElement('td');
 		name.textContent = sources[i].name;
@@ -48,6 +49,17 @@
 		year_published.textContent = sources[i].year_published;
 		source_row.appendChild(year_published);
 
+		let button = document.createElement('button');
+		button.textContent = "Delete"
+		button.onclick = () => {
+			console.log('clicked ' + sources[i].id);
+
+			let deleteElement = new XMLHttpRequest();
+			deleteElement.open('GET', '/delete-source?id=' + sources[i].id, false);
+			deleteElement.send();
+			document.getElementById(sources[i].id).hidden = true;
+		}
+		source_row.appendChild(button);
 
 
 		sourceSection.appendChild(source_row);

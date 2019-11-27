@@ -116,7 +116,7 @@ app.get('/insert-source', function(req, res){
       return;
     }
     console.log(result);
-    res.render('sources');
+    res.redirect('/sources');
   })
 });
 
@@ -130,7 +130,7 @@ app.get('/insert-ingredient', function(req, res){
       return;
     }
     console.log(result);
-    res.render('ingredients');
+    res.redirect('/ingredients');
   })
 });
 
@@ -144,7 +144,7 @@ app.get('/insert-tag', function(req, res){
       return;
     }
     console.log(result);
-    res.render('tags');
+    res.redirect('/tags');
   })
 });
 
@@ -160,9 +160,21 @@ app.get('/delete-recipe', function(req,res) {
     }
     console.log(result);
   })
-  res.render('recipe_main');
+  res.send("Recipe deleted!")
 });
 
+app.get('/delete-source', function(req,res) {
+  mysql.pool.query("DELETE FROM Sources WHERE id = ?", req.query.id, function(err, result){
+    if(err){
+      res.send(err)
+      next(err);
+      console.log(err);
+      return;
+    }
+    console.log(result);
+  })
+  res.send("Source deleted!")
+});
 
 
 // admin stuff for pages that don't exit or errors
