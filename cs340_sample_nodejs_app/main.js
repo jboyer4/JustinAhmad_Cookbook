@@ -26,12 +26,19 @@ app.get('/', function (req, res, next){
   res.render('recipe_main');
 });
 
+// displays sources
 app.get('/sources', function (req, res, next){
   res.render('sources');
 });
 
+// displays ingredients
 app.get('/ingredients', function (req, res, next){
   res.render('ingredients');
+});
+
+// displays tags
+app.get('/tags', function (req, res, next){
+  res.render('tags');
 });
 
 
@@ -127,6 +134,19 @@ app.get('/insert-ingredient', function(req, res){
   })
 });
 
+app.get('/insert-tag', function(req, res){
+  console.log(req.query)
+  mysql.pool.query("INSERT INTO Tags (name, catagory) VALUES (?,?)", [req.query.name, req.query.catagory], function(err, result){
+    if(err){
+      res.send(err)
+      next(err);
+      console.log(err);
+      return;
+    }
+    console.log(result);
+    res.render('tags');
+  })
+});
 
 
 // admin stuff for pages that don't exit or errors

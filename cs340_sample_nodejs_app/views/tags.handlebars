@@ -1,0 +1,50 @@
+<div class="tags_input">
+	<form action="/insert-tag" method="get"> 
+		Name:<input type="text" name="name"><br>
+		Category:<input type="text" name="catagory"><br>
+		<input type="submit">
+	</form>
+</div>
+
+
+<div >
+	<table id='Tags'>
+		<tr>
+			<th>Name</th>
+			<th>Category</th>
+		</tr>
+	</table>
+</div>
+
+<script>
+	
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', '/select-tags', false);
+	xhr.send();
+	console.log(xhr.response);
+
+	let tags = JSON.parse(xhr.response)
+	console.log(tags);
+
+	let section = document.getElementById('Tags');
+
+	for (let i = 0; i < tags.length; i++) {
+		let row = document.createElement('tr');
+		
+		// add source of source to table
+		let name = document.createElement('td');
+		name.textContent = tags[i].name;
+		row.appendChild(name);
+		
+		// add source of source to table
+		let catagory = document.createElement('td');
+		catagory.textContent = tags[i].catagory;
+		row.appendChild(catagory);
+
+
+		section.appendChild(row);
+	}
+
+
+
+</script>
