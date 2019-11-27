@@ -102,7 +102,7 @@ app.get('/insert-recipe', function(req, res){
       return;
     }
     console.log(result);
-    res.render('recipe_main');
+    res.redirect('/');
   })
 });
 
@@ -147,6 +147,22 @@ app.get('/insert-tag', function(req, res){
     res.render('tags');
   })
 });
+
+
+// delete queries
+app.get('/delete-recipe', function(req,res) {
+  mysql.pool.query("DELETE FROM Recipes WHERE id = ?", req.query.id, function(err, result){
+    if(err){
+      res.send(err)
+      next(err);
+      console.log(err);
+      return;
+    }
+    console.log(result);
+  })
+  res.render('recipe_main');
+});
+
 
 
 // admin stuff for pages that don't exit or errors

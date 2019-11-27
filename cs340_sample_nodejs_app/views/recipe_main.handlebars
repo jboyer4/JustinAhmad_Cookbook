@@ -46,6 +46,7 @@
 
 	for (let i = 0; i < recipes.length; i++) {
 		let recipe_row = document.createElement('tr');
+		recipe_row.id = recipes[i].id;
 		
 		// add source of recipe to table
 		let name = document.createElement('td');
@@ -72,6 +73,17 @@
 		source.textContent = recipes[i].source_id;
 		recipe_row.appendChild(source);
 
+		let button = document.createElement('button');
+		button.textContent = "Delete"
+		button.onclick = () => {
+			console.log('clicked ' + recipes[i].id);
+
+			let deleteElement = new XMLHttpRequest();
+			deleteElement.open('GET', '/delete-recipe?id=' + recipes[i].id, false);
+			deleteElement.send();
+			document.getElementById(recipes[i].id).hidden = true;
+		}
+		recipe_row.appendChild(button);
 
 		recipeSection.appendChild(recipe_row);
 	}
