@@ -16,13 +16,18 @@ app.engine('handlebars', handlebars.engine);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('public'));
 app.set('view engine', 'handlebars');
-app.set('port', 33123);
+app.set('port', 5816);
 app.set('mysql', mysql);
 
 
 
-// home page that displays recipes
-app.get('/', function (req, res, next){
+// home page - search
+app.get('/',function (req,res,next){
+  res.render('search');
+});
+
+// displays recipes
+app.get('/recipes', function (req, res, next){
   res.render('recipe_main');
 });
 
