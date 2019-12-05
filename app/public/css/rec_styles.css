@@ -99,4 +99,17 @@ label{
 	font=color: red;
 }
 
+/*align radio buttons*/
+/*
+label {
+  float: left;
+}
 
+input[type=radio],
+input.radio {
+  float: left;
+}
+input[type = text],
+input.text {
+	width:80%;
+*/
