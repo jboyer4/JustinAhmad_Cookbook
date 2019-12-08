@@ -144,7 +144,7 @@ app.get('/insert-source', function(req, res){
 
 app.get('/insert-ingredient', function(req, res){
   console.log(req.query)
-  mysql.pool.query("INSERT INTO Ingredients (recipe_id, name, amount, unit) VALUES ((select id from Recipe where id = ?),?,?, ?)", [parseInt(req.query.recipe_id), req.query.name, req.query.amount, req.query.units], function(err, result){
+  mysql.pool.query("INSERT INTO Ingredients (recipe_id, name, amount, units) VALUES ((select id from Recipes where id = ?),?,?, ?)", [parseInt(req.query.recipe_id), req.query.name, req.query.amount, req.query.units], function(err, result){
     if(err){
       res.send(err)
       next(err);

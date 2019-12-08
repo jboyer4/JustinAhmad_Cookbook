@@ -1,12 +1,12 @@
 -- Clear tables to rebuild them --
 SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS `Ingredient`;
+DROP TABLE IF EXISTS `Ingredients`;
 DROP TABLE IF EXISTS `Recipe_Ingredients`;
-DROP TABLE IF EXISTS `Recipe`;
-DROP TABLE IF EXISTS `Source`;
-DROP TABLE IF EXISTS `Tag`;
-DROP TABLE IF EXISTS `Recipe_Tag`;
+DROP TABLE IF EXISTS `Recipes`;
+DROP TABLE IF EXISTS `Sources`;
+DROP TABLE IF EXISTS `Tags`;
+DROP TABLE IF EXISTS `Recipe_Tags`;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
