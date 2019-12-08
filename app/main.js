@@ -197,7 +197,7 @@ app.get('/delete-recipe', function(req,res) {
     }
     console.log(result);
   })
-  res.send("Recipe deleted!")
+  res.send("deleted!")
 });
 
 app.get('/delete-source', function(req,res) {
@@ -210,7 +210,67 @@ app.get('/delete-source', function(req,res) {
     }
     console.log(result);
   })
-  res.send("Source deleted!")
+  res.send("deleted!")
+});
+
+app.get('/delete-recipe_tag', function(req,res) {
+  mysql.pool.query("DELETE FROM Recipe_Tags WHERE (recipe_id = ? AND tag_id = ?)", [req.query.recipe_id, req.query.tag_id], function(err, result){
+    if(err){
+      res.send(err)
+      next(err);
+      console.log(err);
+      return;
+    }
+    console.log(result);
+  })
+  res.send("deleted!")
+});
+
+// update recipe page
+app.get('/update-recipe', function(req,res) {
+
+  mysql.pool.query("SELECT * FROM Recipes WHERE id = (?)", req.query.id, function(err, result){
+    if(err){
+      return;
+    }
+    console.log(result[0]);
+    info = result[0]
+
+    let context = {};
+    context.recipe_id = req.query.id
+    context.name = info.name
+    context.serving_size = info.serving_size
+    context.instructions = info.instructions
+    context.cook_time = info.cook_time
+    context.source_id = info.source_id
+    
+
+    res.render('update.handlebars', context)
+  })
+
+
+
+});
+
+
+app.get('/update-recipe-form', function(req,res) {
+
+  if (req.query.source_id == '') {
+    req.query.source_id = null;
+  }
+
+  mysql.pool.query("UPDATE Recipes SET name = ?, serving_size = ?, instructions = ?, cook_time = ?, source_id = ? WHERE id = ?", 
+  [req.query.name, req.query.serving_size, req.query.instructions, req.query.cook_time, req.query.source_id, req.query.id], function(err, result){
+    if(err){
+      res.send(err)
+      next(err);
+      console.log(err);
+      return;
+    }
+    console.log(result);
+    res.render('recipe_main.handlebars')
+  })
+  
 });
 
 

@@ -1,5 +1,6 @@
 <div class="recipe_tag_input">
 	<form action="/insert-recipe_tag" method="get"> 
+        <h3>Add Recipe Tag relationship from tables below</h3> 
 		Recipe Id:<input type="number" name="recipe_id"><br>
 		Tag Id:<input type="number" name="tag_id"><br>
 		<input type="submit">
@@ -107,6 +108,7 @@
 
 	for (let i = 0; i < recipe_tags.length; i++) {
 		let recipeTag_row = document.createElement('tr');
+        recipeTag_row.id = 'recipe_tag'+i
 
         // add id
         let recipeTag_rid = document.createElement('td');
@@ -117,6 +119,17 @@
 		let tag_name = document.createElement('td');
 		tag_name.textContent = recipe_tags[i].tag_id;
 		recipeTag_row.appendChild(tag_name);
+
+        let button = document.createElement('button');
+		button.textContent = "Delete"
+		button.onclick = () => {
+
+			let deleteElement = new XMLHttpRequest();
+			deleteElement.open('GET', '/delete-recipe_tag?recipe_id=' + recipe_tags[i].recipe_id +'&tag_id=' + recipe_tags[i].tag_id , false);
+			deleteElement.send();
+			document.getElementById('recipe_tag'+i).hidden = true;
+		}
+		recipeTag_row.appendChild(button);
 		
 		recipeTagSection.appendChild(recipeTag_row);
 	}
