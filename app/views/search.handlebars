@@ -49,5 +49,74 @@
 	</form>
 </div>
 
-<div class="searchMenu">
-</div>
+<script>
+	
+	// http request for recipes
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', '/select-recipes', false);
+	xhr.send();
+	console.log(xhr.response);
+
+	let recipes = JSON.parse(xhr.response)
+	console.log(recipes);
+
+	let recipeSection = document.getElementById('recipes');
+
+	for (let i = 0; i < recipes.length; i++) {
+		let recipe_row = document.createElement('tr');
+		recipe_row.id = recipes[i].id;
+		
+		// add source of recipe to table
+		let name = document.createElement('td');
+		name.textContent = recipes[i].name;
+		recipe_row.appendChild(name);
+		
+		// add source of recipe to table
+		let serving_size = document.createElement('td');
+		serving_size.textContent = recipes[i].serving_size;
+		recipe_row.appendChild(serving_size);
+
+		// add source of recipe to table
+		let cook_time = document.createElement('td');
+		cook_time.textContent = recipes[i].cook_time;
+		recipe_row.appendChild(cook_time);
+
+		// add source of recipe to table
+		let instructions = document.createElement('td');
+		instructions.textContent = recipes[i].instructions;
+		recipe_row.appendChild(instructions);
+
+		// add source of recipe to table
+		let source = document.createElement('td');
+		source.textContent = recipes[i].source_id;
+		recipe_row.appendChild(source);
+
+		// this button sends a request to delete the element and it then hides the html
+		let button = document.createElement('button');
+		button.textContent = "Delete"
+		button.onclick = () => {
+			console.log('clicked ' + recipes[i].id);
+
+			let deleteElement = new XMLHttpRequest();
+			deleteElement.open('GET', '/delete-recipe?id=' + recipes[i].id, false);
+			deleteElement.send();
+			document.getElementById(recipes[i].id).hidden = true;
+		}
+		recipe_row.appendChild(button);
+
+		// update button 
+		let ubutton = document.createElement('button');
+		ubutton.textContent = "Update"
+		ubutton.onclick = () => {
+			let url = '/update-recipe?id=' + recipes[i].id;
+			//console.log(url)
+			window.location = url;
+		}
+		recipe_row.appendChild(ubutton);
+
+		recipeSection.appendChild(recipe_row);
+	}
+
+
+
+</script>
