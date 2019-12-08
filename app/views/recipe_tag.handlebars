@@ -1,0 +1,126 @@
+<div class="recipe_tag_input">
+	<form action="/insert-recipe_tag" method="get"> 
+		Recipe Id:<input type="number" name="recipe_id"><br>
+		Tag Id:<input type="number" name="tag_id"><br>
+		<input type="submit">
+	</form>
+</div>
+
+
+<div >
+    <h3>Recipes</h3>
+	<table id="recipes">
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+		</tr>
+	</table>
+</div>
+
+<div >
+    <h3>Tags</h3>
+	<table id="tags">
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+		</tr>
+	</table>
+</div>
+
+<div >
+    <h3>Recipes and Tags Relationship</h3>
+	<table id="recipe_tags">
+		<tr>
+			<th>Recipe Id</th>
+			<th>Tag Id</th>
+		</tr>
+	</table>
+</div>
+
+<script>
+	
+	// http request for recipes
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', '/select-recipes', false);
+	xhr.send();
+	console.log(xhr.response);
+
+	let recipes = JSON.parse(xhr.response)
+	console.log(recipes);
+
+	let recipeSection = document.getElementById('recipes');
+
+	for (let i = 0; i < recipes.length; i++) {
+		let recipe_row = document.createElement('tr');
+		recipe_row.id = recipes[i].id;
+
+        		// add source of recipe to table
+		let recipe_id = document.createElement('td');
+		recipe_id.textContent = recipes[i].id;
+		recipe_row.appendChild(recipe_id);
+
+		// add source of recipe to table
+		let recipe_name = document.createElement('td');
+		recipe_name.textContent = recipes[i].name;
+		recipe_row.appendChild(recipe_name);
+	
+
+		recipeSection.appendChild(recipe_row);
+	}
+
+
+    let xhr2 = new XMLHttpRequest();
+	xhr2.open('GET', '/select-tags', false);
+	xhr2.send();
+	console.log(xhr2.response);
+
+	let tags = JSON.parse(xhr2.response)
+	console.log(tags);
+
+	let tagSection = document.getElementById('tags');
+
+	for (let i = 0; i < tags.length; i++) {
+		let tag_row = document.createElement('tr');
+
+        // add id
+        let tag_id = document.createElement('td');
+		tag_id.textContent = tags[i].id;
+		tag_row.appendChild(tag_id);
+
+		// add source of source to table
+		let tag_name = document.createElement('td');
+		tag_name.textContent = tags[i].name;
+		tag_row.appendChild(tag_name);
+		
+		tagSection.appendChild(tag_row);
+	}
+
+    let xhr3 = new XMLHttpRequest();
+	xhr3.open('GET', '/select-recipe_tags', false);
+	xhr3.send();
+	console.log(xhr3.response);
+
+	let recipe_tags = JSON.parse(xhr3.response)
+	console.log(recipe_tags);
+
+	let recipeTagSection = document.getElementById('recipe_tags');
+
+	for (let i = 0; i < recipe_tags.length; i++) {
+		let recipeTag_row = document.createElement('tr');
+
+        // add id
+        let recipeTag_rid = document.createElement('td');
+		recipeTag_rid.textContent = recipe_tags[i].recipe_id;
+		recipeTag_row.appendChild(recipeTag_rid);
+
+		// add source of source to table
+		let tag_name = document.createElement('td');
+		tag_name.textContent = recipe_tags[i].tag_id;
+		recipeTag_row.appendChild(tag_name);
+		
+		recipeTagSection.appendChild(recipeTag_row);
+	}
+
+
+
+</script>

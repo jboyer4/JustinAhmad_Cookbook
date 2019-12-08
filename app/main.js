@@ -46,6 +46,11 @@ app.get('/tags', function (req, res, next){
   res.render('tags');
 });
 
+// display recipe_tag table
+app.get('/recipe_tag', function (req, res, next){
+  res.render('recipe_tag');
+});
+
 
 // get recipes
 app.get('/select-recipes', function (req,res,next) {
@@ -95,8 +100,20 @@ app.get('/select-ingredients', function (req,res,next) {
   })
 });
 
+// get recipe_tag
+app.get('/select-recipe_tags', function (req,res,next) {
+  mysql.pool.query("SELECT * FROM Recipe_Tags", function(err, result){
+    if(err){
+      next(err);
+      return;
+    }
+    console.log(result);
+    res.send(JSON.stringify(result));
+  })
+});
 
-// post insert
+
+// inserts
 app.get('/insert-recipe', function(req, res){
   console.log(req.query)
   mysql.pool.query("INSERT INTO Recipes (name, serving_size, cook_time, instructions) VALUES (?,?,?,?)", [req.query.name, req.query.serving_size, req.query.cook_time, req.query.instructions], function(err, result){
@@ -150,6 +167,21 @@ app.get('/insert-tag', function(req, res){
     }
     console.log(result);
     res.redirect('/tags');
+  })
+});
+
+
+app.get('/insert-recipe_tag', function(req, res){
+  console.log(req.query)
+  mysql.pool.query("INSERT INTO Recipe_Tags (Recipe_id, Tag_id) VALUES (?,?)", [req.query.recipe_id, req.query.tag_id], function(err, result){
+    if(err){
+      res.send(err)
+      next(err);
+      console.log(err);
+      return;
+    }
+    console.log(result);
+    res.redirect('/recipe_tag');
   })
 });
 
