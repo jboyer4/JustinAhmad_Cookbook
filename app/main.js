@@ -112,6 +112,24 @@ app.get('/select-recipe_tags', function (req,res,next) {
   })
 });
 
+//Search
+app.get('/searchResults', function(req, res){
+  //console.log(req.query);
+  cookTime = req.query.timeVal;
+  ltgt = req.query.selection;
+
+  if(cookTime != ""){	
+    mysql.pool.query("SELECT name, cook_time FROM Recipes WHERE cook_time " + ltgt + cookTime, function(err, result){
+      if(err){
+        res.send(err)
+	console.log(err);
+	return;
+      }
+      console.log(JSON.stringify(result));
+      res.send(JSON.stringify(result));
+    })
+  }
+});
 
 // inserts
 app.get('/insert-recipe', function(req, res){

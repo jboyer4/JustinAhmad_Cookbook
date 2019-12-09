@@ -1,66 +1,38 @@
-<div class="searchMenu">
-	<form>
-		<fieldset>
-			<legend>Search</legend>
-			<label>What would you like to search by?
-			<br />
-			<select name = "table">
-			<option values = "name">Name</option>
-			<option values = "tag">Tag</option>
-			<option values = "time">Cook Time</option>
-			<option values = "ingredient">Ingredient</option>
-			<option values = "source">Source</option>
-			</select>
-			</label>
-			<br />
- 			<br />
-
-			<label>Name:
-				<input type="text" name="name">
-   			</label>
-			<br />
-			<label>Tag or Type:
-				<input type="text" name="tag">
-			</label>
-			<br />
-			
-			<label>Cook Time in Min:
-				<select name = "moreOrLess"> 
-      				<option value = "more">&gt;</option>
-      				<option value = "less">&lt;</option>
-      				<option value = "equals">exactly</option> 
- 				</select>
-				<input type="text" name="time">
-			</label>
-			<br />
-
-			<label>Indredient:
-				<input type="text" name="ingredient">
-			</label>
-			<br />
-
-			<label>Source:
-				<input type="text" name="source">
-			</label>
-			<br />
-
-			<button type="submit"><i>Submit</i></button>
-		</fieldset>
-	</form>
-</div>
-
 <script>
-	
+function searchResults(){
+	let time = document.getElementById('timeVal').value;
+	let gtlt = document.getElementById('selection').value;
+
+
 	// http request for recipes
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', '/select-recipes', false);
+	xhr.open('GET', "/searchResults?timeVal=" + time + "&selection=" + gtlt, false);
+	xhr.addEventListener('load', function(event){
+		if(xhr.status >= 200 && xhr.status < 400){
+			event.preventDefault();	
+			var response = JSON.parse(xhr.responseText);
+			console.log(response);
+			buildTable(response);
+		}
+		else{
+			console.log("Error: " + xhr.status);
+			return null;
+		}
+	});
+
 	xhr.send();
-	console.log(xhr.response);
+	return false;
 
-	let recipes = JSON.parse(xhr.response)
-	console.log(recipes);
+}
 
+
+function buildTable(recipes){	
+	//Prep table
 	let recipeSection = document.getElementById('recipes');
+	while(recipeSection.firstChild){
+		recipeSection.removeChild(recipeSection.firstChild);
+	}	
+	
 
 	for (let i = 0; i < recipes.length; i++) {
 		let recipe_row = document.createElement('tr');
@@ -90,33 +62,37 @@
 		let source = document.createElement('td');
 		source.textContent = recipes[i].source_id;
 		recipe_row.appendChild(source);
-
-		// this button sends a request to delete the element and it then hides the html
-		let button = document.createElement('button');
-		button.textContent = "Delete"
-		button.onclick = () => {
-			console.log('clicked ' + recipes[i].id);
-
-			let deleteElement = new XMLHttpRequest();
-			deleteElement.open('GET', '/delete-recipe?id=' + recipes[i].id, false);
-			deleteElement.send();
-			document.getElementById(recipes[i].id).hidden = true;
-		}
-		recipe_row.appendChild(button);
-
-		// update button 
-		let ubutton = document.createElement('button');
-		ubutton.textContent = "Update"
-		ubutton.onclick = () => {
-			let url = '/update-recipe?id=' + recipes[i].id;
-			//console.log(url)
-			window.location = url;
-		}
-		recipe_row.appendChild(ubutton);
-
+		
 		recipeSection.appendChild(recipe_row);
 	}
-
-
-
+}
 </script>
+
+
+<div class="searchMenu">
+	<form>
+		<fieldset>
+			<legend>Search</legend>
+			<label>Cook Time in Min:
+				<select name = "moreOrLess" id = "selection"> 
+      				<option value = ">">more than</option>
+      				<option value = "<">less than</option>
+      				<option value = "=">exactly</option> 
+ 				</select>
+				<input type="text" name="time" id = "timeVal">
+			</label>
+			<br />
+
+			<button id="searchButton" onclick="return searchResults()"><i>Search</i></button>
+		</fieldset>
+	</form>
+</div>
+
+<div >
+	<table id="recipes">
+		<tr>
+			<th>Name</th>
+			<th>Cook Time</th>
+		</tr>
+	</table>
+</div>
