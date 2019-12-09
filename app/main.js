@@ -20,6 +20,7 @@ app.set('port', 5816);
 app.set('mysql', mysql);
 
 
+/* ------- ROUTES SECTION ------- */
 
 // home page - search
 app.get('/',function (req,res,next){
@@ -52,7 +53,8 @@ app.get('/recipe_tag', function (req, res, next){
 });
 
 
-// get recipes
+/* ------- SELECT SECTION ------- */
+// select recipes
 app.get('/select-recipes', function (req,res,next) {
   mysql.pool.query("SELECT * FROM Recipes", function(err, result){
     if(err){
@@ -64,7 +66,7 @@ app.get('/select-recipes', function (req,res,next) {
   })
 });
 
-// get sources
+// select sources
 app.get('/select-sources', function (req,res,next) {
   mysql.pool.query("SELECT * FROM Sources", function(err, result){
     if(err){
@@ -76,7 +78,7 @@ app.get('/select-sources', function (req,res,next) {
   })
 });
 
-// get tags
+// select tags
 app.get('/select-tags', function (req,res,next) {
   mysql.pool.query("SELECT * FROM Tags", function(err, result){
     if(err){
@@ -88,7 +90,7 @@ app.get('/select-tags', function (req,res,next) {
   })
 });
 
-// get ingredients
+// select ingredients
 app.get('/select-ingredients', function (req,res,next) {
   mysql.pool.query("SELECT * FROM Ingredients", function(err, result){
     if(err){
@@ -100,7 +102,7 @@ app.get('/select-ingredients', function (req,res,next) {
   })
 });
 
-// get recipe_tag
+// select recipe_tag
 app.get('/select-recipe_tags', function (req,res,next) {
   mysql.pool.query("SELECT * FROM Recipe_Tags", function(err, result){
     if(err){
@@ -112,7 +114,7 @@ app.get('/select-recipe_tags', function (req,res,next) {
   })
 });
 
-//Search
+// Search
 app.get('/searchResults', function(req, res){
   //console.log(req.query);
   cookTime = req.query.timeVal;
@@ -131,7 +133,8 @@ app.get('/searchResults', function(req, res){
   }
 });
 
-// inserts
+/* ------- INSERT SECTION ------- */
+// insert recipe
 app.get('/insert-recipe', function(req, res){
   console.log(req.query)
   mysql.pool.query("INSERT INTO Recipes (name, serving_size, cook_time, instructions) VALUES (?,?,?,?)", [req.query.name, req.query.serving_size, req.query.cook_time, req.query.instructions], function(err, result){
@@ -146,6 +149,7 @@ app.get('/insert-recipe', function(req, res){
   })
 });
 
+// insert source
 app.get('/insert-source', function(req, res){
   console.log(req.query)
   mysql.pool.query("INSERT INTO Sources (name, author, year_published) VALUES (?,?,?)", [req.query.name, req.query.author, req.query.year_published], function(err, result){
@@ -160,6 +164,7 @@ app.get('/insert-source', function(req, res){
   })
 });
 
+// insert ingredient
 app.get('/insert-ingredient', function(req, res){
   console.log(req.query)
   mysql.pool.query("INSERT INTO Ingredients (recipe_id, name, amount, units) VALUES ((select id from Recipes where id = ?),?,?, ?)", [parseInt(req.query.recipe_id), req.query.name, req.query.amount, req.query.units], function(err, result){
@@ -174,6 +179,7 @@ app.get('/insert-ingredient', function(req, res){
   })
 });
 
+// insert tag
 app.get('/insert-tag', function(req, res){
   console.log(req.query)
   mysql.pool.query("INSERT INTO Tags (name, catagory) VALUES (?,?)", [req.query.name, req.query.catagory], function(err, result){
@@ -189,6 +195,7 @@ app.get('/insert-tag', function(req, res){
 });
 
 
+// insert recipe_tag
 app.get('/insert-recipe_tag', function(req, res){
   console.log(req.query)
   mysql.pool.query("INSERT INTO Recipe_Tags (Recipe_id, Tag_id) VALUES (?,?)", [req.query.recipe_id, req.query.tag_id], function(err, result){
@@ -204,7 +211,8 @@ app.get('/insert-recipe_tag', function(req, res){
 });
 
 
-// delete queries
+/* ------- DELETE SECTION ------- */
+// delete recipe
 app.get('/delete-recipe', function(req,res) {
   mysql.pool.query("DELETE FROM Recipes WHERE id = ?", req.query.id, function(err, result){
     if(err){
@@ -218,6 +226,7 @@ app.get('/delete-recipe', function(req,res) {
   res.send("deleted!")
 });
 
+// delete source
 app.get('/delete-source', function(req,res) {
   mysql.pool.query("DELETE FROM Sources WHERE id = ?", req.query.id, function(err, result){
     if(err){
@@ -231,6 +240,7 @@ app.get('/delete-source', function(req,res) {
   res.send("deleted!")
 });
 
+// delete recipe_tag
 app.get('/delete-recipe_tag', function(req,res) {
   mysql.pool.query("DELETE FROM Recipe_Tags WHERE (recipe_id = ? AND tag_id = ?)", [req.query.recipe_id, req.query.tag_id], function(err, result){
     if(err){
@@ -244,6 +254,7 @@ app.get('/delete-recipe_tag', function(req,res) {
   res.send("deleted!")
 });
 
+/* ------- UPDATE SECTION ------- */
 // update recipe page
 app.get('/update-recipe', function(req,res) {
 
@@ -265,12 +276,9 @@ app.get('/update-recipe', function(req,res) {
 
     res.render('update.handlebars', context)
   })
-
-
-
 });
 
-
+// update recipe query request
 app.get('/update-recipe-form', function(req,res) {
 
   if (req.query.source_id == '') {
